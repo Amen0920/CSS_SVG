@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG</title>
+    <style>
+        /* 눈동자 좌우이동 애니메이션 */
+        @keyframes eye-ball-ani{
+            0%{
+                transform: translateX(-20px);
+            }
+            100%{
+                transform: translateX(20px);
+            }
+        }
+        /* 눈동자 깜빡임 애니메이션 */
+        @keyframes eye-close-open-ani{
+            80%{
+                transform:scaleY(1);
+            }
+            90%{
+                transform:scaleY(0.01);
+            }
+            100%{
+                transform:scaleY(0.01);
+            }
+        }
+        /* 파란선그려지는 애니메이션 */
+        @keyframes ell-ani{
+            0%{
+                stroke-dashoffset: -713;
+            }
+            50%{
+                stroke-dashoffset: 0;
+            }
+            100%{
+                stroke-dashoffset: 713;
+            }
+        }
+
+        @keyframes rotate-ani-1 {
+            100%{
+                transform:rotate3d(0,1,0, 360deg);
+            }
+        }
+
+        @keyframes rotate-ani-2 {
+            100%{
+                transform: rotate3d(2,1.22,0,360deg);
+            }
+        }
+
+        @keyframes rotate-ani-3 {
+            100%{
+                transform: rotate3d(-2,1.22,0,360deg);
+            }
+        }
+    
+        .react-moon{
+            position: absolute;
+            left:0;
+            top:0;
+            right:0;
+            bottom:0;
+            width:200px;
+            height:200px;
+            margin: auto;
+        }
+         /* 눈동자 좌우이동 애니메이션 적용 */
+         .eye-ball{
+            animation: eye-ball-ani 1s infinite alternate linear;
+        }
+        /* 눈동자 깜빡임 애니메이션 적용 */
+        .eye{
+            transform-origin: 50% 50%;
+            animation: eye-close-open-ani 2s linear alternate infinite;
+        }
+        /* 옅은선 css */
+        .cls-1{
+            fill:none;
+            stroke:#61dafb;
+            stroke-miterlimit:10;
+            stroke-width:15px;
+            opacity:0.3;
+        }
+        /* 그려지는 효과 선 */
+        .cls-eff{
+            opacity: 1;
+            stroke-dasharray: 713;
+            stroke-dashoffset: -713;
+            animation:ell-ani 0.7s infinite ease-in-out
+        }
+        /* 선그리는 애니메이션 순서조정 */
+        .cls-eff-2{
+            animation-delay: 0.2s;
+        }
+        .cls-eff-3{
+            animation-delay: 0.4s;
+        }
+        .ells{
+            transform-origin: 50% 50%;
+        }
+        .ells-1{
+            
+            animation:rotate-ani-1 5s infinite linear;
+        }
+        .ells-2{
+            
+            animation:rotate-ani-2 5s infinite linear;
+        }
+        .ells-3{
+            
+            animation:rotate-ani-3 5s infinite linear;
+        }
+
+    </style>
+</head>
+<body>
+    <svg class="react-moon" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 327 291.84">
+        <defs>
+            <!-- 검은원이 하얀원안에서 보이도록하는 마스크 참조요소 -->
+          <mask id="eye-mask">
+            <ellipse class="eye" cx="163.5" cy="145.92" rx="28" ry="14" fill="#fff"/>
+          </mask>
+
+    
+        </defs>
+        <g class="ells ells-1">
+            <ellipse class="cls-1" cx="163.5" cy="145.92" rx="156" ry="60"/>
+            <ellipse class="cls-1 cls-eff cls-eff-1" cx="163.5" cy="145.92" rx="156" ry="60"/>
+        </g>
+        <g class="ells ells-2">
+            <ellipse class="cls-1" cx="384" cy="384" rx="156" ry="60" transform="matrix(.5 -.87 .87 .5 -361.05 286.47)"/>
+            <ellipse class="cls-1 cls-eff cls-eff-2" cx="384" cy="384" rx="156" ry="60" transform="matrix(.5 -.87 .87 .5 -361.05 286.47)"/>
+        </g>
+        <g class="ells ells-3">
+            <ellipse class="cls-1" cx="384" cy="384" rx="60" ry="156" transform="rotate(-30 -170.504 676.413)"/>
+            <ellipse class="cls-1 cls-eff cls-eff-3" cx="384" cy="384" rx="60" ry="156" transform="rotate(-30 -170.504 676.413)"/>
+        </g>
+        
+        <circle cx="163.5" cy="145.92" r="31" fill="#61dafb"/>
+        <ellipse class="eye" cx="163.5" cy="145.92" rx="28" ry="14" fill="#fff"/>
+
+        <!-- 검은원이 하얀원안에서만 보이도록 마스크 적용 -->
+        <g mask="url(#eye-mask)">
+            <circle class="eye-ball" cx="163.5" cy="145.92" r="13" fill="#333"/>
+        </g>
+        
+      </svg>
+      <script>
+          (() => {
+            const moonElem = document.querySelector('.react-moon');
+            // 마우스가 정지한 위치.
+            const targetPos = { x:0, y:0 };
+            const easeValue = 0.05;
+
+            window.addEventListener('mousemove', (e) => {
+                targetPos.x = e.clientX - innerWidth * 0.5;
+                targetPos.y = e.clientY - innerHeight * 0.5;
+            });
+          })();
+      </script>
+</body>
+</html>
