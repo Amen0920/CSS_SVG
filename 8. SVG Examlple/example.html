@@ -155,11 +155,29 @@
             // 마우스가 정지한 위치.
             const targetPos = { x:0, y:0 };
             const easeValue = 0.05;
+            const reactMoonInfo = {
+                x:0,
+                y:0
+            }
 
             window.addEventListener('mousemove', (e) => {
                 targetPos.x = e.clientX - innerWidth * 0.5;
                 targetPos.y = e.clientY - innerHeight * 0.5;
             });
+
+            let dx;
+            let dy;
+
+            function render () {
+                dx = targetPos.x - reactMoonInfo.x;
+                dy = targetPos.y - reactMoonInfo.y;
+                reactMoonInfo.x = reactMoonInfo.x + dx*easeValue;
+                reactMoonInfo.y = reactMoonInfo.y + dy*easeValue;
+                moonElem.style.transform = `translate3d(${reactMoonInfo.x}px,${reactMoonInfo.y}px,0px)`
+                requestAnimationFrame(render);
+            }
+            render();
+
           })();
       </script>
 </body>
